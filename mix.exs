@@ -1,7 +1,7 @@
 defmodule UeberauthInstagram.Mixfile do
   use Mix.Project
 
-  @version "0.3.0"
+  @version "0.4.0"
   @url "https://github.com/silentsilas/ueberauth_instagram"
 
   def project do
@@ -25,7 +25,7 @@ defmodule UeberauthInstagram.Mixfile do
 
   defp deps do
     [{:ueberauth, "~> 0.7.0"},
-     {:oauth2, "~> 0.5"},
+     {:oauth2, "~> 2.0"},
      {:ex_doc, "~> 0.1", only: :dev},
      {:earmark, ">= 0.0.0", only: :dev},
      {:dogma, ">= 0.0.0", only: [:dev, :test]}]
