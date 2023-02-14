@@ -3,13 +3,14 @@ defmodule Ueberauth.Strategy.Instagram do
   Instagram Strategy for Überauth.
   """
 
-  use Ueberauth.Strategy, default_scope: "public_content",
-                          uid_field: :id,
-                          allowed_request_params: [
-                            :auth_type,
-                            :scope
-                          ]
-
+  use Ueberauth.Strategy,
+    default_scope: "user_profile,user_media",
+    ignores_csrf_attack: true,
+    uid_field: :id,
+    allowed_request_params: [
+      :auth_type,
+      :scope
+    ]
 
   alias Ueberauth.Auth.Info
   alias Ueberauth.Auth.Credentials
@@ -19,16 +20,18 @@ defmodule Ueberauth.Strategy.Instagram do
   Handles initial request for Instagram authentication.
   """
   def handle_request!(conn) do
-    allowed_params = conn
-     |> option(:allowed_request_params)
-     |> Enum.map(&to_string/1)
+    allowed_params =
+      conn
+      |> option(:allowed_request_params)
+      |> Enum.map(&to_string/1)
 
-    authorize_url = conn.params
+    authorize_url =
+      conn.params
       |> maybe_replace_param(conn, "scope", :default_scope)
-      |> Enum.filter(fn {k,_v} -> Enum.member?(allowed_params, k) end)
-      |> Enum.map(fn {k,v} -> {String.to_existing_atom(k), v} end)
+      |> Enum.filter(fn {k, _v} -> Enum.member?(allowed_params, k) end)
+      |> Enum.map(fn {k, v} -> {String.to_existing_atom(k), v} end)
       |> Keyword.put(:redirect_uri, callback_url(conn))
-      |> Ueberauth.Strategy.Instagram.OAuth.authorize_url!
+      |> Ueberauth.Strategy.Instagram.OAuth.authorize_url!()
 
     redirect!(conn, authorize_url)
   end
@@ -133,6 +136,7 @@ defmodule Ueberauth.Strategy.Instagram do
     |> options
     |> Dict.get(key, default)
   end
+
   defp option(nil, conn, key), do: option(conn, key)
   defp option(value, _conn, _key), do: value
 

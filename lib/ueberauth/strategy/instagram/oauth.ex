@@ -12,9 +12,9 @@ defmodule Ueberauth.Strategy.Instagram.OAuth do
 
   @defaults [
     strategy: __MODULE__,
-    site: "https://api.instagram.com",
-    authorize_url: "https://api.instagram.com/oauth/authorize/",
-    token_url: "/oauth/access_token",
+    site: "https://www.instagram.com",
+    authorize_url: "https://www.instagram.com/oauth/authorize/",
+    token_url: "/oauth/access_token"
   ]
 
   @doc """
@@ -26,7 +26,6 @@ defmodule Ueberauth.Strategy.Instagram.OAuth do
   """
   def client(opts \\ []) do
     config = Application.get_env(:ueberauth, Ueberauth.Strategy.Instagram.OAuth)
-
 
     opts =
       @defaults
@@ -62,6 +61,7 @@ defmodule Ueberauth.Strategy.Instagram.OAuth do
     params =
       params
       |> Keyword.put(:client_secret, client.client_secret)
+
     client
     |> put_header("Accept", "application/json")
     |> OAuth2.Strategy.AuthCode.get_token(params, headers)
