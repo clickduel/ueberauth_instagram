@@ -1,22 +1,24 @@
 defmodule UeberauthInstagram.Mixfile do
   use Mix.Project
 
-  @version "0.4.0"
-  @url "https://github.com/silentsilas/ueberauth_instagram"
+  @version "0.5.0"
+  @url "https://github.com/clickduel/ueberauth_instagram"
 
   def project do
-    [app: :ueberauth_instagram,
-     version: @version,
-     name: "Ueberauth Instagram Strategy",
-     package: package(),
-     elixir: "~> 1.3",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     source_url: @url,
-     homepage_url: @url,
-     description: description(),
-     deps: deps(),
-     docs: docs()]
+    [
+      app: :ueberauth_instagram,
+      version: @version,
+      name: "Ueberauth Instagram Strategy",
+      package: package(),
+      elixir: "~> 1.14",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      source_url: @url,
+      homepage_url: @url,
+      description: description(),
+      deps: deps(),
+      docs: docs()
+    ]
   end
 
   def application do
@@ -24,11 +26,13 @@ defmodule UeberauthInstagram.Mixfile do
   end
 
   defp deps do
-    [{:ueberauth, "~> 0.7.0"},
-     {:oauth2, "~> 2.0"},
-     {:ex_doc, "~> 0.1", only: :dev},
-     {:earmark, ">= 0.0.0", only: :dev},
-     {:dogma, ">= 0.0.0", only: [:dev, :test]}]
+    [
+      {:ueberauth, "~> 0.10.3"},
+      {:oauth2, "~> 2.1"},
+      {:ex_doc, "~> 0.1", only: :dev},
+      {:earmark, ">= 0.0.0", only: :dev},
+      {:dogma, ">= 0.0.0", only: [:dev, :test]}
+    ]
   end
 
   defp docs do
@@ -44,9 +48,11 @@ defmodule UeberauthInstagram.Mixfile do
   end
 
   defp package do
-    [files: ["lib", "mix.exs", "README.md", "LICENSE"],
+    [
+      files: ["lib", "mix.exs", "README.md", "LICENSE"],
       maintainers: ["Jason Truluck", "Silas Tippens"],
       licenses: ["MIT"],
-      links: %{"GitHub": @url}]
+      links: %{GitHub: @url}
+    ]
   end
 end
