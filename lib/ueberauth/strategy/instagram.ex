@@ -125,16 +125,16 @@ defmodule Ueberauth.Strategy.Instagram do
 
   defp fetch_user(conn, token) do
     conn = put_private(conn, :instagram_token, token)
-    user = token.other_params["user"]
-    put_private(conn, :instagram_user, user)
+    user_id = token.other_params["user_id"]
+    put_private(conn, :instagram_user, %{"id" => Integer.to_string(user_id)})
   end
 
   defp option(conn, key) do
-    default = Dict.get(default_options, key)
+    default = Keyword.get(default_options(), key)
 
     conn
     |> options
-    |> Dict.get(key, default)
+    |> Keyword.get(key, default)
   end
 
   defp option(nil, conn, key), do: option(conn, key)
